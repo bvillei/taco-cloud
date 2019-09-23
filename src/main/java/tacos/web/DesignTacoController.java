@@ -1,15 +1,22 @@
-package tacos;
+package tacos.web;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import tacos.Ingredient;
+import tacos.Taco;
 import tacos.Ingredient.Type;;
 
 @Slf4j
@@ -49,5 +56,15 @@ public class DesignTacoController {
 				.stream()
 				.filter(x -> x.getType().equals(type))
 				.collect(Collectors.toList());
+	}
+
+	@PostMapping
+	public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors, Model model) {
+		if (errors.hasErrors()) {
+			return "design";
+		}
+		log.info("Processing design: " + design);
+
+		return "redirect:/orders/current";
 	}
 }
