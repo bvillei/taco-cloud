@@ -64,7 +64,6 @@ public class DesignTacoController {
 			return "design";
 		}
 		log.info("Processing design: " + design);
-
 		return "redirect:/orders/current";
 	}
 }
