@@ -1,7 +1,6 @@
 package tacos;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -18,20 +17,20 @@ public class Order {
 
 	private Date placedAt;
 
-	@NotBlank(message="Delivery name is required")
-	private String deliveryName;
+	@NotBlank(message="Name is required")
+	private String name;
 
 	@NotBlank(message="Street is required")
-	private String deliveryStreet;
+	private String street;
 
 	@NotBlank(message="City is required")
-	private String deliveryCity;
+	private String city;
 
 	@NotBlank(message="State is required")
-	private String deliveryState;
+	private String state;
 
 	@NotBlank(message="Zip code is required")
-	private String deliveryZip;
+	private String zip;
 
 	@CreditCardNumber(message="Not a valid credit card number")
 	private String ccNumber;
@@ -43,10 +42,4 @@ public class Order {
 	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
 
-	private List<Taco> tacos = new ArrayList<>();
-
-	public void addDesign(Taco design) {
-		this.tacos.add(design);
-
-	}
 }
