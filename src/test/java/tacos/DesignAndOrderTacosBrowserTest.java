@@ -36,8 +36,7 @@ public class DesignAndOrderTacosBrowserTest {
 	@BeforeClass
 	public static void setup() {
 		browser = new HtmlUnitDriver();
-		browser.manage().timeouts()
-		.implicitlyWait(10, TimeUnit.SECONDS);
+		browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
 	@AfterClass
@@ -86,7 +85,7 @@ public class DesignAndOrderTacosBrowserTest {
 		assertDesignPageElements();
 
 		for (String ingredient : ingredients) {
-			browser.findElementByCssSelector("input[value='" + ingredient + "']").click();      
+			browser.findElementByCssSelector("input[value='" + ingredient + "']").click();
 		}
 		browser.findElementByCssSelector("input#name").sendKeys(name);
 		browser.findElementByCssSelector("form").submit();
@@ -128,14 +127,13 @@ public class DesignAndOrderTacosBrowserTest {
 		assertIngredient(sauceGroup, 1, "SRCR", "Sour Cream");
 	}
 
-
 	private void fillInAndSubmitOrderForm() {
 		assertTrue(browser.getCurrentUrl().startsWith(orderDetailsPageUrl()));
-		fillField("input#name", "Ima Hungry");
-		fillField("input#street", "1234 Culinary Blvd.");
-		fillField("input#city", "Foodsville");
-		fillField("input#state", "CO");
-		fillField("input#zip", "81019");
+		fillField("input#deliveryName", "Ima Hungry");
+		fillField("input#deliveryStreet", "1234 Culinary Blvd.");
+		fillField("input#deliveryCity", "Foodsville");
+		fillField("input#deliveryState", "CO");
+		fillField("input#deliveryZip", "81019");
 		fillField("input#ccNumber", "4111111111111111");
 		fillField("input#ccExpiration", "10/19");
 		fillField("input#ccCVV", "123");
@@ -151,31 +149,30 @@ public class DesignAndOrderTacosBrowserTest {
 		List<String> validationErrors = getValidationErrorTexts();
 		assertEquals(9, validationErrors.size());
 		assertTrue(validationErrors.contains("Please correct the problems below and resubmit."));
-		assertTrue(validationErrors.contains("Name is required"));
+		assertTrue(validationErrors.contains("Delivery name is required"));
 		assertTrue(validationErrors.contains("Street is required"));
 		assertTrue(validationErrors.contains("City is required"));
 		assertTrue(validationErrors.contains("State is required"));
 		assertTrue(validationErrors.contains("Zip code is required"));
 		assertTrue(validationErrors.contains("Not a valid credit card number"));
 		assertTrue(validationErrors.contains("Must be formatted MM/YY"));
-		assertTrue(validationErrors.contains("Invalid CVV"));    
+		assertTrue(validationErrors.contains("Invalid CVV"));
 	}
 
 	private List<String> getValidationErrorTexts() {
 		List<WebElement> validationErrorElements = browser.findElementsByClassName("validationError");
-		List<String> validationErrors = validationErrorElements.stream()
-				.map(el -> el.getText())
+		List<String> validationErrors = validationErrorElements.stream().map(el -> el.getText())
 				.collect(Collectors.toList());
 		return validationErrors;
 	}
 
 	private void submitInvalidOrderForm() {
 		assertTrue(browser.getCurrentUrl().startsWith(orderDetailsPageUrl()));
-		fillField("input#name", "I");
-		fillField("input#street", "1");
-		fillField("input#city", "F");
-		fillField("input#state", "C");
-		fillField("input#zip", "8");
+		fillField("input#deliveryName", "I");
+		fillField("input#deliveryStreet", "1");
+		fillField("input#deliveryCity", "F");
+		fillField("input#deliveryState", "C");
+		fillField("input#deliveryZip", "8");
 		fillField("input#ccNumber", "1234432112344322");
 		fillField("input#ccExpiration", "14/91");
 		fillField("input#ccCVV", "1234");
@@ -188,7 +185,7 @@ public class DesignAndOrderTacosBrowserTest {
 		assertTrue(validationErrors.contains("Please correct the problems below and resubmit."));
 		assertTrue(validationErrors.contains("Not a valid credit card number"));
 		assertTrue(validationErrors.contains("Must be formatted MM/YY"));
-		assertTrue(validationErrors.contains("Invalid CVV"));    
+		assertTrue(validationErrors.contains("Invalid CVV"));
 	}
 
 	private void fillField(String fieldName, String value) {
@@ -197,14 +194,11 @@ public class DesignAndOrderTacosBrowserTest {
 		field.sendKeys(value);
 	}
 
-	private void assertIngredient(WebElement ingredientGroup, 
-			int ingredientIdx, String id, String name) {
+	private void assertIngredient(WebElement ingredientGroup, int ingredientIdx, String id, String name) {
 		List<WebElement> proteins = ingredientGroup.findElements(By.tagName("div"));
 		WebElement ingredient = proteins.get(ingredientIdx);
-		assertEquals(id, 
-				ingredient.findElement(By.tagName("input")).getAttribute("value"));
-		assertEquals(name, 
-				ingredient.findElement(By.tagName("span")).getText());
+		assertEquals(id, ingredient.findElement(By.tagName("input")).getAttribute("value"));
+		assertEquals(name, ingredient.findElement(By.tagName("span")).getText());
 	}
 
 	private void clickDesignATaco() {
@@ -216,7 +210,6 @@ public class DesignAndOrderTacosBrowserTest {
 		assertTrue(browser.getCurrentUrl().startsWith(orderDetailsPageUrl()));
 		browser.findElementByCssSelector("a[id='another']").click();
 	}
-
 
 	//
 	// URL helper methods
