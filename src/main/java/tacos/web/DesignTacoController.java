@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tacos.Ingredient;
+import tacos.Ingredient.Type;
+import tacos.Order;
 import tacos.Taco;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
-import tacos.Ingredient.Type;
-import tacos.Order;;
 
 @Controller
 @RequestMapping("/design")
@@ -55,8 +55,7 @@ public class DesignTacoController {
 
 		Type[] types = Ingredient.Type.values();
 		for (Type type : types) {
-			model.addAttribute(type.toString().toLowerCase(),
-					filterByType(ingredients, type));
+			model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
 		}
 
 		return "design";
@@ -75,13 +74,8 @@ public class DesignTacoController {
 		return "redirect:/orders/current";
 	}
 
-
-	private List<Ingredient> filterByType(
-			List<Ingredient> ingredients, Type type) {
-		return ingredients
-				.stream()
-				.filter(x -> x.getType().equals(type))
-				.collect(Collectors.toList());
+	private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
+		return ingredients.stream().filter(x -> x.getType().equals(type)).collect(Collectors.toList());
 	}
 
 }
