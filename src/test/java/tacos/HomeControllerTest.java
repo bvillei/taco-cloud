@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import tacos.data.TacoRepository;
 import tacos.data.UserRepository;
+import tacos.web.OrderProps;
 import tacos.data.IngredientRepository;
 import tacos.data.OrderRepository;
 
@@ -41,7 +42,13 @@ public class HomeControllerTest {
 
 	@MockBean
 	private PasswordEncoder passwordEncoder;
-	
+
+	@MockBean
+	private DiscountCodeProps discountProps;
+
+	@MockBean
+	private OrderProps orderProps;
+
 	@Test
 	public void testHomePage() throws Exception {
 		mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("home"))
