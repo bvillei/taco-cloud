@@ -1,13 +1,18 @@
-spring:
-  security:
-    user:
-      name: admin
-      password: a
+#spring:
+#  security:
+#    user:
+#      name: admin
+#      password: a
 
 taco:
   orders:
     pageSize: 10
 
+
+  discount:
+    codes:
+      abcdef: 10
+    
 ---
 spring:
   profiles: prod
