@@ -2,8 +2,11 @@ package tacos.web;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -64,4 +67,12 @@ public class OrderController {
 		return "redirect:/";
 	}
 
+	@GetMapping
+	public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+
+		Pageable pageable = PageRequest.of(0, 20);
+		model.addAttribute("orders", orderRepo.findByUserOrderByPlacedAtDesc(user, pageable));
+
+		return "orderList";
+	}
 }

@@ -1,0 +1,19 @@
+taco:
+  orders:
+    pageSize: 10
+
+---
+spring:
+  profiles: prod
+  
+  datasource:
+    url: jdbc:mysql://localhost/tacocloud
+    username: tacouser
+    password: tacopassword
+ 
+logging:
+  path: /var/logs/
+  file: TacoCloud.log
+  level:
+    tacos: WARN
+    org.springframework.security: DEBUG
