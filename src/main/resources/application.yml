@@ -1,3 +1,9 @@
+spring:
+  security:
+    user:
+      name: admin
+      password: a
+
 taco:
   orders:
     pageSize: 10
